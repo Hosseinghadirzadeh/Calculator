@@ -122,9 +122,9 @@
     <script>
         let result = 0;
         let flag = '';
-        let count = 0;//count for Minus
-        let countz = 0;//count for Multiple
-        let countd = 0;//count for division
+        let countMinus = 0;//count for Minus
+        let countMultiply = 0;//count for Multiple
+        let countDivision = 0;//count for division
         let c = 1;
         let point = 0
         let btn = document.querySelectorAll('button');
@@ -152,9 +152,9 @@
             if (this.innerHTML == 'Clear') {
                 input.value = '';
                 result = 0;
-                count = 0;
-                countd = 0;
-                countz = 0;
+                countMinus = 0;
+                countDivision = 0;
+                countMultiply = 0;
                 flag = ''
                 point=0
             }
@@ -183,37 +183,37 @@
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '-') {
                     flag = '-'
-                    if (count == 0)
+                    if (countMinus == 0)
                         result += parseFloat(input.value)
                     else {
                         result -= parseFloat(input.value)
 
                     }
-                    count++;
+                    countMinus++;
                     input.value = '';
                 }
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '*') {
                     flag = '*'
-                    if (countz == 0)
+                    if (countMultiply == 0)
                         result += parseFloat(input.value)
                     else {
                         result *= parseFloat(input.value)
 
                     }
-                    countz++;
+                    countMultiply++;
                     input.value = ''
                 }
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '/') {
                     flag = '/'
-                    if (countd == 0)
+                    if (countDivision == 0)
                         result += parseFloat(input.value)
                     else {
                         result /= parseFloat(input.value)
 
                     }
-                    countd++;
+                    countDivision++;
                     input.value = ''
                 }
             }
@@ -229,15 +229,15 @@
                         break;
                     case '-':
                         result -= parseFloat(input.value);
-                        count = 0;
+                        countMinus = 0;
                         break;
                     case '*':
                         result *= parseFloat(input.value);
-                        countz = 0;
+                        countMultiply = 0;
                         break;
                     case '/':
                         result /= parseFloat(input.value);
-                        countd = 0;
+                        countDivision = 0;
                         break;
                 }
                 input.value = result
