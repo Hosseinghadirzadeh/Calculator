@@ -18,7 +18,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: rgb(255,211,218);
+            background-color: rgb(255, 211, 218);
         }
 
         .calc {
@@ -72,8 +72,9 @@
             cursor: pointer;
             margin: 2px;
         }
-        .keypad>button:active{
-            background: linear-gradient(315deg,pink ,#fc737c );
+
+        .keypad>button:active {
+            background: linear-gradient(315deg, pink, #fc737c);
         }
 
         .keypad>button:nth-of-type(1) {
@@ -89,31 +90,77 @@
 <body>
     <main>
         <div class="calc">
-            <input type="text">
+            <input type="text" id="input">
             <div class="keypad">
-                <button>Clear</button>
-                <button>Del</button>
-                <button>/</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>*</button>
-                <button>4</button>
-                <button>5</button>
-                <button>6</button>
-                <button>+</button>
-                <button>7</button>
-                <button>8</button>
-                <button>9</button>
-                <button>-</button>
-                <button>.</button>
-                <button>0</button>
-                <button>=</button>
+                <button data-num="off">Clear</button>
+                <button data-num="off">Del</button>
+                <button data-num="off">/</button>
+                <button data-num="on">1</button>
+                <button data-num="on">2</button>
+                <button data-num="on">3</button>
+                <button data-num="off">*</button>
+                <button data-num="on">4</button>
+                <button data-num="on">5</button>
+                <button data-num="on">6</button>
+                <button data-num="off">+</button>
+                <button data-num="on">7</button>
+                <button data-num="on">8</button>
+                <button data-num="on">9</button>
+                <button data-num="off">-</button>
+                <button data-num="on">.</button>
+                <button data-num="on">0</button>
+                <button data-num="off">=</button>
             </div>
         </div>
     </main>
     <script>
+        let result=0;
+        let flag = '';
+        let btn = document.querySelectorAll('button');
+        btn.forEach((item) => {
+            if (item.getAttribute('data-num') == 'on') {
+                item.addEventListener('click', _write)
+            } else {
+                item.addEventListener('click', _calc)
+            }
+        });
+        function _write() {
+            document.getElementById('input').value += this.innerHTML
+        }
+        function _calc() {
+            if (this.innerHTML == 'Clear') {
+                document.getElementById('input').value = ''
+                result=0
+            }
+            if (this.innerHTML == '+') {
+                result += parseInt(document.getElementById('input').value)
+                document.getElementById('input').value = ''
+                flag = '+'
 
+            }
+            if (this.innerHTML == '-') {
+                document.getElementById('input').value = '';
+                flag = '-'
+
+            }
+            if (this.innerHTML == '*') {
+                document.getElementById('input').value = ''
+                flag = '*'
+
+            }
+            if (this.innerHTML == '/') {
+                document.getElementById('input').value = ''
+                flag = '/'
+
+            }
+            if (this.innerHTML == '=') {
+                if(flag=='+'){
+                    result += parseInt(document.getElementById('input').value) 
+                }
+              document.getElementById('input').value = result
+
+            }
+        }
     </script>
 </body>
 
