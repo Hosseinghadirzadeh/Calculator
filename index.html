@@ -114,8 +114,9 @@
         </div>
     </main>
     <script>
-        let result=0;
+        let result = 0;
         let flag = '';
+        let count = 0;
         let btn = document.querySelectorAll('button');
         btn.forEach((item) => {
             if (item.getAttribute('data-num') == 'on') {
@@ -130,7 +131,7 @@
         function _calc() {
             if (this.innerHTML == 'Clear') {
                 document.getElementById('input').value = ''
-                result=0
+                result = 0
             }
             if (this.innerHTML == '+') {
                 result += parseInt(document.getElementById('input').value)
@@ -139,6 +140,13 @@
 
             }
             if (this.innerHTML == '-') {
+                if (count == 0)
+                    result += parseInt(document.getElementById('input').value)
+                else {
+                    result -= parseInt(document.getElementById('input').value)
+
+                }
+                count++;
                 document.getElementById('input').value = '';
                 flag = '-'
 
@@ -154,11 +162,24 @@
 
             }
             if (this.innerHTML == '=') {
-                if(flag=='+'){
-                    result += parseInt(document.getElementById('input').value) 
-                }
-              document.getElementById('input').value = result
+                switch (flag) {
+                    case '+':
+                        result += parseInt(document.getElementById('input').value)
+                        break;
+                    case '-':
+                        result -= parseInt(document.getElementById('input').value)
+                         count=0;
+                        break;
+                    case '*':
+                        result *= parseInt(document.getElementById('input').value)
+                        break;
+                    case '/':
+                        result /= parseInt(document.getElementById('input').value)
+                        break;
 
+                }
+                document.getElementById('input').value = result
+                result=0;
             }
         }
     </script>
