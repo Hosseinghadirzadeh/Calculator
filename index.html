@@ -122,124 +122,120 @@
     <script>
         let result = 0;
         let flag = '';
-        let count = 0;//count for Minus
-        let countz = 0;//count for Multiple
-        let countd = 0;//count for division
-        let c = 1;
-        let point = 0
+        let countMinus = 0; //count for Minus
+        let countMultiply = 0; //count for Multiple
+        let countDivision = 0; //count for division
+        let isLocked = false;
         let btn = document.querySelectorAll('button');
+        let input = document.getElementById('input');
 
         btn.forEach((item) => {
             if (item.getAttribute('data-num') == 'on') {
-                item.addEventListener('click', _write)
+                item.addEventListener('click', _write);
             } else {
-                item.addEventListener('click', _calc)
+                item.addEventListener('click', _calc);
             }
         });
 
         function _write() {
             if (this.innerHTML != '.')
-                document.getElementById('input').value += this.innerHTML
-            if (point == 0 && this.innerHTML == '.') {
-                document.getElementById('input').value += this.innerHTML
-                point++;
+                input.value += this.innerHTML;
+            if (!input.value.includes('.') && this.innerHTML == '.') {
+                input.value += this.innerHTML;
             }
         }
 
         function _calc() {
 
             if (this.innerHTML == 'Clear') {
-                document.getElementById('input').value = '';
+                input.value = '';
                 result = 0;
-                count = 0;
-                countd = 0;
-                countz = 0;
-                flag = ''
-                point=0
+                countMinus = 0;
+                countDivision = 0;
+                countMultiply = 0;
+                flag = '';
             }
             ////////////////////////////////////////////////////////////////
             if (this.innerText == 'lock') {
-                if (c % 2 == 1) {
+                if (!isLocked) {
                     this.children[0].style.color = 'black';
                     btn.forEach((item, index) => {
-                        if (index != 1) { item.disabled = true }
+                        if (index != 1) { 
+                            item.disabled = true;
+                        }
                     })
                 } else {
                     this.children[0].style.color = 'white';
                     btn.forEach((item, index) => {
-                        item.disabled = false
-                    })
+                        item.disabled = false;
+                    });
                 }
-                c++;
+                isLocked = !isLocked;
             }
-            if (document.getElementById('input') != '') {
+            if (input != '') {
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '+') {
-                    flag = '+'
-                    result += parseFloat(document.getElementById('input').value)
-                    document.getElementById('input').value = ''
+                    flag = '+';
+                    result += parseFloat(input.value) || 0;
+                    input.value = '';
                 }
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '-') {
-                    flag = '-'
-                    if (count == 0)
-                        result += parseFloat(document.getElementById('input').value)
-                    else {
-                        result -= parseFloat(document.getElementById('input').value)
-
+                    flag = '-';
+                    if (countMinus == 0) {
+                        result += parseFloat(input.value) || 0;
                     }
-                    count++;
-                    document.getElementById('input').value = '';
+                    else {
+                        result -= parseFloat(input.value) || 0;
+                    }
+                    countMinus++;
+                    input.value = '';
                 }
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '*') {
-                    flag = '*'
-                    if (countz == 0)
-                        result += parseFloat(document.getElementById('input').value)
+                    flag = '*';
+                    if (countMultiply == 0)
+                        result += parseFloat(input.value) || 0;
                     else {
-                        result *= parseFloat(document.getElementById('input').value)
+                        result *= parseFloat(input.value) || 1;
 
                     }
-                    countz++;
-                    document.getElementById('input').value = ''
+                    countMultiply++;
+                    input.value = '';
                 }
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '/') {
-                    flag = '/'
-                    if (countd == 0)
-                        result += parseFloat(document.getElementById('input').value)
-                    else {
-                        result /= parseFloat(document.getElementById('input').value)
-
+                    flag = '/';
+                    if (countDivision == 0){
+                        result += parseFloat(input.value) || 0;
                     }
-                    countd++;
-                    document.getElementById('input').value = ''
+                    else {
+                        result /= parseFloat(input.value) || 1;
+                    }
+                    countDivision++;
+                    input.value = '';
                 }
-            }
-            ////////////////////////////////////////////////////////////////
-            if (point == 0) {
-
             }
             ////////////////////////////////////////////////////////////////
             if (this.innerHTML == '=') {
                 switch (flag) {
                     case '+':
-                        result += parseFloat(document.getElementById('input').value);
+                        result += parseFloat(input.value) || 0;
                         break;
                     case '-':
-                        result -= parseFloat(document.getElementById('input').value);
-                        count = 0;
+                        result -= parseFloat(input.value) || 0;
+                        countMinus = 0;
                         break;
                     case '*':
-                        result *= parseFloat(document.getElementById('input').value);
-                        countz = 0;
+                        result *= parseFloat(input.value) || 1;
+                        countMultiply = 0;
                         break;
                     case '/':
-                        result /= parseFloat(document.getElementById('input').value);
-                        countd = 0;
+                        result /= parseFloat(input.value) || 1;
+                        countDivision = 0;
                         break;
                 }
-                document.getElementById('input').value = result
+                input.value = result;
                 result = 0;
             }
         }
