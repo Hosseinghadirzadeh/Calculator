@@ -126,7 +126,9 @@
         let countz = 0;//count for Multiple
         let countd = 0;//count for division
         let c = 1;
+        let point = 0
         let btn = document.querySelectorAll('button');
+
         btn.forEach((item) => {
             if (item.getAttribute('data-num') == 'on') {
                 item.addEventListener('click', _write)
@@ -134,10 +136,18 @@
                 item.addEventListener('click', _calc)
             }
         });
+
         function _write() {
-            document.getElementById('input').value += this.innerHTML
+            if (this.innerHTML != '.')
+                document.getElementById('input').value += this.innerHTML
+            if (point == 0 && this.innerHTML == '.') {
+                document.getElementById('input').value += this.innerHTML
+                point++;
+            }
         }
+
         function _calc() {
+
             if (this.innerHTML == 'Clear') {
                 document.getElementById('input').value = '';
                 result = 0;
@@ -145,82 +155,87 @@
                 countd = 0;
                 countz = 0;
                 flag = ''
+                point=0
             }
+            ////////////////////////////////////////////////////////////////
             if (this.innerText == 'lock') {
                 if (c % 2 == 1) {
                     this.children[0].style.color = 'black';
-                    btn.forEach((item,index) => {
-                      if (index != 1) { item.disabled = true }
+                    btn.forEach((item, index) => {
+                        if (index != 1) { item.disabled = true }
                     })
                 } else {
                     this.children[0].style.color = 'white';
                     btn.forEach((item, index) => {
-                         item.disabled = false 
+                        item.disabled = false
                     })
                 }
                 c++;
             }
             if (document.getElementById('input') != '') {
-
+                ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '+') {
                     flag = '+'
-                    result += parseInt(document.getElementById('input').value)
+                    result += parseFloat(document.getElementById('input').value)
                     document.getElementById('input').value = ''
                 }
-
+                ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '-') {
                     flag = '-'
                     if (count == 0)
-                        result += parseInt(document.getElementById('input').value)
+                        result += parseFloat(document.getElementById('input').value)
                     else {
-                        result -= parseInt(document.getElementById('input').value)
+                        result -= parseFloat(document.getElementById('input').value)
 
                     }
                     count++;
                     document.getElementById('input').value = '';
                 }
-
+                ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '*') {
                     flag = '*'
                     if (countz == 0)
-                        result += parseInt(document.getElementById('input').value)
+                        result += parseFloat(document.getElementById('input').value)
                     else {
-                        result *= parseInt(document.getElementById('input').value)
+                        result *= parseFloat(document.getElementById('input').value)
 
                     }
                     countz++;
                     document.getElementById('input').value = ''
                 }
-
+                ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '/') {
                     flag = '/'
                     if (countd == 0)
-                        result += parseInt(document.getElementById('input').value)
+                        result += parseFloat(document.getElementById('input').value)
                     else {
-                        result /= parseInt(document.getElementById('input').value)
+                        result /= parseFloat(document.getElementById('input').value)
 
                     }
                     countd++;
                     document.getElementById('input').value = ''
                 }
+            }
+            ////////////////////////////////////////////////////////////////
+            if (point == 0) {
 
             }
-
+            ////////////////////////////////////////////////////////////////
             if (this.innerHTML == '=') {
                 switch (flag) {
                     case '+':
-                        result += parseInt(document.getElementById('input').value);
+                        result += parseFloat(document.getElementById('input').value);
                         break;
                     case '-':
-                        result -= parseInt(document.getElementById('input').value);
+                        result -= parseFloat(document.getElementById('input').value);
                         count = 0;
                         break;
                     case '*':
-                        result *= parseInt(document.getElementById('input').value);
+                        result *= parseFloat(document.getElementById('input').value);
                         countz = 0;
                         break;
                     case '/':
-                        result /= parseInt(document.getElementById('input').value);
+                        result /= parseFloat(document.getElementById('input').value);
                         countd = 0;
                         break;
                 }
