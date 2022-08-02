@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Document</title>
+
     <style>
         * {
             padding: 0;
@@ -84,6 +86,10 @@
         .keypad>button:nth-last-of-type(1) {
             grid-area: 5/3/span 1/span 2;
         }
+
+        .black {
+            color: black;
+        }
     </style>
 </head>
 
@@ -93,7 +99,7 @@
             <input type="text" id="input">
             <div class="keypad">
                 <button data-num="off">Clear</button>
-                <button data-num="off">Del</button>
+                <button data-num="off"><i class="material-icons">lock</i></button>
                 <button data-num="off">/</button>
                 <button data-num="on">1</button>
                 <button data-num="on">2</button>
@@ -119,6 +125,7 @@
         let count = 0;//count for Minus
         let countz = 0;//count for Multiple
         let countd = 0;//count for division
+        let c = 1;
         let btn = document.querySelectorAll('button');
         btn.forEach((item) => {
             if (item.getAttribute('data-num') == 'on') {
@@ -139,12 +146,28 @@
                 countz = 0;
                 flag = ''
             }
+            if (this.innerText == 'lock') {
+                if (c % 2 == 1) {
+                    this.children[0].style.color = 'black';
+                    btn.forEach((item,index) => {
+                      if (index != 1) { item.disabled = true }
+                    })
+                } else {
+                    this.children[0].style.color = 'white';
+                    btn.forEach((item, index) => {
+                         item.disabled = false 
+                    })
+                }
+                c++;
+            }
             if (document.getElementById('input') != '') {
+
                 if (this.innerHTML == '+') {
                     flag = '+'
                     result += parseInt(document.getElementById('input').value)
                     document.getElementById('input').value = ''
                 }
+
                 if (this.innerHTML == '-') {
                     flag = '-'
                     if (count == 0)
@@ -155,9 +178,8 @@
                     }
                     count++;
                     document.getElementById('input').value = '';
-
-
                 }
+
                 if (this.innerHTML == '*') {
                     flag = '*'
                     if (countz == 0)
@@ -168,9 +190,8 @@
                     }
                     countz++;
                     document.getElementById('input').value = ''
-
-
                 }
+
                 if (this.innerHTML == '/') {
                     flag = '/'
                     if (countd == 0)
@@ -181,11 +202,11 @@
                     }
                     countd++;
                     document.getElementById('input').value = ''
-
-
                 }
 
-            } if (this.innerHTML == '=') {
+            }
+
+            if (this.innerHTML == '=') {
                 switch (flag) {
                     case '+':
                         result += parseInt(document.getElementById('input').value);
@@ -202,7 +223,6 @@
                         result /= parseInt(document.getElementById('input').value);
                         countd = 0;
                         break;
-
                 }
                 document.getElementById('input').value = result
                 result = 0;
