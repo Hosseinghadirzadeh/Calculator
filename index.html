@@ -179,17 +179,17 @@
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '+') {
                     flag = '+';
-                    result += parseFloat(input.value);
+                    result += parseFloat(input.value) || 0;
                     input.value = '';
                 }
                 ////////////////////////////////////////////////////////////////
                 if (this.innerHTML == '-') {
                     flag = '-';
                     if (countMinus == 0) {
-                        result += parseFloat(input.value);
+                        result += parseFloat(input.value) || 0;
                     }
                     else {
-                        result -= parseFloat(input.value);
+                        result -= parseFloat(input.value) || 0;
                     }
                     countMinus++;
                     input.value = '';
@@ -198,9 +198,9 @@
                 if (this.innerHTML == '*') {
                     flag = '*';
                     if (countMultiply == 0)
-                        result += parseFloat(input.value);
+                        result += parseFloat(input.value) || 0;
                     else {
-                        result *= parseFloat(input.value);
+                        result *= parseFloat(input.value) || 1;
 
                     }
                     countMultiply++;
@@ -210,10 +210,10 @@
                 if (this.innerHTML == '/') {
                     flag = '/';
                     if (countDivision == 0){
-                        result += parseFloat(input.value);
+                        result += parseFloat(input.value) || 0;
                     }
                     else {
-                        result /= parseFloat(input.value);
+                        result /= parseFloat(input.value) || 1;
                     }
                     countDivision++;
                     input.value = '';
@@ -227,18 +227,18 @@
             if (this.innerHTML == '=') {
                 switch (flag) {
                     case '+':
-                        result += parseFloat(input.value);
+                        result += parseFloat(input.value) || 0;
                         break;
                     case '-':
-                        result -= parseFloat(input.value);
+                        result -= parseFloat(input.value) || 0;
                         countMinus = 0;
                         break;
                     case '*':
-                        result *= parseFloat(input.value);
+                        result *= parseFloat(input.value) || 1;
                         countMultiply = 0;
                         break;
                     case '/':
-                        result /= parseFloat(input.value);
+                        result /= parseFloat(input.value) || 1;
                         countDivision = 0;
                         break;
                 }
