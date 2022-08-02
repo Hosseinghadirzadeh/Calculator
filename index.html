@@ -125,7 +125,7 @@
         let countMinus = 0; //count for Minus
         let countMultiply = 0; //count for Multiple
         let countDivision = 0; //count for division
-        let c = 1;
+        let isLocked = false;
         let point = 0;
         let btn = document.querySelectorAll('button');
         let input = document.getElementById('input');
@@ -160,7 +160,7 @@
             }
             ////////////////////////////////////////////////////////////////
             if (this.innerText == 'lock') {
-                if (c % 2 == 1) {
+                if (!isLocked) {
                     this.children[0].style.color = 'black';
                     btn.forEach((item, index) => {
                         if (index != 1) { 
@@ -173,7 +173,7 @@
                         item.disabled = false;
                     });
                 }
-                c++;
+                isLocked = !isLocked;
             }
             if (input != '') {
                 ////////////////////////////////////////////////////////////////
